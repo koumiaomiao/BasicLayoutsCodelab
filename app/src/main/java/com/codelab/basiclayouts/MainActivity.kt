@@ -107,7 +107,7 @@ fun SearchBar(
         },
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(56.dp)
+            .heightIn(min = 56.dp)
     )
 }
 
@@ -116,11 +116,11 @@ fun SearchBar(
 fun AlignYourBodyElement(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(drawable),
@@ -133,7 +133,7 @@ fun AlignYourBodyElement(
         Text(
             text = stringResource(text),
             modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
 }
@@ -143,7 +143,7 @@ fun AlignYourBodyElement(
 fun FavoriteCollectionCard(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
@@ -158,13 +158,12 @@ fun FavoriteCollectionCard(
                 painter = painterResource(drawable),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(80.dp)
+                modifier = Modifier.size(80.dp)
             )
             Text(
                 text = stringResource(text),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
     }
@@ -177,9 +176,9 @@ fun AlignYourBodyRow(
 ) {
     // Implement composable here
     LazyRow(
-        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier
     ) {
         items(alignYourBodyData) { item ->
             AlignYourBodyElement(item.drawable, item.text)
@@ -201,7 +200,7 @@ fun FavoriteCollectionsGrid(
         modifier = modifier.height(168.dp)
     ) {
         items(favoriteCollectionsData) { item ->
-            FavoriteCollectionCard(item.drawable, item.text)
+            FavoriteCollectionCard(item.drawable, item.text, Modifier.height(80.dp))
         }
     }
 }
@@ -229,15 +228,17 @@ fun HomeSection(
 // Step: Home screen - Scrolling
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    // Implement composable here
-    Column(modifier.verticalScroll(rememberScrollState())) {
+    Column(
+        modifier
+            .verticalScroll(rememberScrollState())
+    ) {
         Spacer(Modifier.height(16.dp))
         SearchBar(Modifier.padding(horizontal = 16.dp))
         HomeSection(R.string.align_your_body) {
-            AlignYourBodyRow(modifier)
+            AlignYourBodyRow()
         }
         HomeSection(R.string.favorite_collections) {
-            FavoriteCollectionsGrid(modifier)
+            FavoriteCollectionsGrid()
         }
         Spacer(Modifier.height(16.dp))
     }
@@ -259,9 +260,7 @@ private fun SootheBottomNavigation(modifier: Modifier = Modifier) {
                 )
             },
             label = {
-                Text(
-                    text = stringResource(R.string.bottom_navigation_home)
-                )
+                Text(stringResource(R.string.bottom_navigation_home))
             },
             selected = true,
             onClick = {}
@@ -274,9 +273,7 @@ private fun SootheBottomNavigation(modifier: Modifier = Modifier) {
                 )
             },
             label = {
-                Text(
-                    text = stringResource(R.string.bottom_navigation_profile)
-                )
+                Text(stringResource(R.string.bottom_navigation_profile))
             },
             selected = false,
             onClick = {}
@@ -297,7 +294,7 @@ fun MySootheAppPortrait() {
     }
 }
 
-// Step: Bottom navigation - Material
+// Step: Navigation Rail - Material
 @Composable
 private fun SootheNavigationRail(modifier: Modifier = Modifier) {
     // Implement composable here
@@ -343,7 +340,7 @@ private fun SootheNavigationRail(modifier: Modifier = Modifier) {
 
 // Step: Landscape Mode
 @Composable
-fun MySootheAppLandscape(){
+fun MySootheAppLandscape() {
     // Implement composable here
     MySootheTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
@@ -403,9 +400,9 @@ fun SearchBarPreview() {
 fun AlignYourBodyElementPreview() {
     MySootheTheme {
         AlignYourBodyElement(
-            modifier = Modifier.padding(8.dp),
+            text = R.string.ab1_inversions,
             drawable = R.drawable.ab1_inversions,
-            text = R.string.ab1_inversions
+            modifier = Modifier.padding(8.dp)
         )
     }
 }
@@ -415,9 +412,9 @@ fun AlignYourBodyElementPreview() {
 fun FavoriteCollectionCardPreview() {
     MySootheTheme {
         FavoriteCollectionCard(
-            modifier = Modifier.padding(8.dp),
             text = R.string.fc2_nature_meditations,
-            drawable = R.drawable.fc2_nature_meditations
+            drawable = R.drawable.fc2_nature_meditations,
+            modifier = Modifier.padding(8.dp)
         )
     }
 }
